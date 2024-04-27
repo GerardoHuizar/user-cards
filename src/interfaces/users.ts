@@ -7,6 +7,10 @@ export type User = {
   phone: string;
   website: string;
   company: Company;
+  friend: {
+    name: string;
+    id: number;
+  };
 };
 
 type Address = {

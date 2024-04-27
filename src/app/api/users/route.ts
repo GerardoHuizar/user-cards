@@ -17,7 +17,20 @@ export async function GET(): Promise<User | unknown> {
       );
     }
     const users = (await response.json()) as User[];
-    return new NextResponse(JSON.stringify(users));
+
+    const usersWithFriends = users.map((user) => {
+      const randomIndex = Math.floor(Math.random() * users.length);
+      const randomUser = users[randomIndex];
+
+      return {
+        ...user,
+        friend: {
+          name: randomUser.name,
+          id: randomUser.id,
+        },
+      };
+    });
+    return new NextResponse(JSON.stringify(usersWithFriends));
   } catch (error) {
     if (error instanceof UserError) {
       if (KIND_ERRORS.includes(error.type)) {
